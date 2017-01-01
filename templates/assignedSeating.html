@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0;text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title>Assigned Seating</title>
+<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet">
+<script src="{{url_for('static', filename='assignedSeating.js')}}" type="text/javascript"></script>
+</head>
+
+<body onload="onLoad()">
+<h3>Assigned Seating</h3>
+<div id="dropZone">Drop guest list here (CSV)</div>
+<input type="file" id="files" /><br>
+Num Tables: <input type="number" id="NumTablesInput" value="10"><br>
+Num Per Table: <input type="number" id="NumPerTableInput" value="10"><br>
+<button onclick="onAssign()">Assign</button> <br>
+<output id="list"></output>
+
+</body>
+</html>

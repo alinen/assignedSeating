@@ -1,0 +1,10 @@
+div#dropZone
+{
+   height: 50px;
+   width: 90%;
+   border-style: dotted;
+   text-align: center;
+   line-height: 50px;
+   padding: 1em;
+   font-size: large;
+}
