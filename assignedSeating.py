@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, render_template
+import numpy as np
+from sklearn import cluster
 
 app = Flask(__name__)
 
@@ -10,26 +12,28 @@ def assignSeats(name):
     numGuests = int(params[2])
     constraints = params[3]
 
+    affinityMatrix = np.zeros((numGuests,numGuests))
+    
+
     if numGuests > numTables * numPerTable:
        return ""; # return HTML error code too?
+
+    for i in range(numGuests):
+        for j in range(numGuests):
+            affinityMatrix[i][j] = int(constraints[i*numGuests + j])
+
+    print affinityMatrix
+
+    clusterIdx = cluster.spectral_clustering(affinityMatrix, numTables)
 
     response = "%d:%d:%d:"%(numTables,numPerTable,numGuests)
     idx = 0
     tables = []
-    for i in range(numTables):
-        if idx > numGuests-1: 
-           break
-
-        tables.append([])
-        for j in range(numPerTable):
-            tables[i].append(idx) # append guest ID
-            idx = idx + 1
-            response += str(i)
-            if idx < numGuests:
-               response += ','
-            else:
-               break
-
+    for i in range(numGuests):
+        response += str(clusterIdx[i])
+        if i < numGuests:
+            response += ','
+    print response
     return response
 
 @app.route("/")
