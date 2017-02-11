@@ -7,8 +7,22 @@
 .droplist
 {
    min-height: 20px;
-   border-style: dotted;
+   border-style: none;
    background-color: rgb(200,255,200);
+   border-radius: 10px;
+   width: 200px;
+   list-style-type: none;
+   margin-left: 0.5em;
+   padding: 0.5em;
+}
+.droplistitem
+{
+   background-color: rgb(150, 255, 150);
+   border-color: rgb(0,255,255);
+   border-width: 2px;
+   border-style: outset;
+   border-radius: 10px;
+   padding: 0.1em;
 }
 </style>
 <script>
@@ -31,7 +45,7 @@ function onLoad()
    {
       var name = guestList[i].trim();
       if (name === "") continue;
-      listHTML += '<li id='+name+' draggable=true ondragstart="drag(event)">'+name+'</li>';
+      listHTML += '<li id="'+name+'" class="droplistitem" draggable=true ondragstart="drag(event)">'+name+'</li>';
    }
 
    document.getElementById('guestlist').innerHTML = listHTML;
