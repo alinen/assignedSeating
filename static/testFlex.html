@@ -13,7 +13,8 @@
 </style>
 <script>
 
-guestList = [];
+var gElementId = 1;
+var guestList = [];
 function onLoad()
 {
    guestList = [];
@@ -38,10 +39,22 @@ function onLoad()
 
 function addKeepTogether()
 {
+   var name = "keepTogether"+gElementId;
+   gElementId++;
+   console.log("addKeepTogether "+name);
+   var newList = '<ul id="'+name+
+      '" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+   document.getElementById('keepTogetherRow').insertAdjacentHTML('beforeend', newList);
 }
 
 function addKeepSeparate()
 {
+   var name = "keepSeperate"+gElementId;
+   gElementId++;
+   console.log("addKeepSeparate "+name);
+   var newList = '<ul id="'+name+
+      '" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+   document.getElementById('keepSeparateRow').insertAdjacentHTML('beforeend', newList);
 }
 
 function allowDrop(ev)
@@ -77,17 +90,13 @@ function drop(ev)
    </ul>
 </div>
 <div class="right">
-   <div class="constraintRow">
-      <p>Keep together
-      <ul id="keepTogether" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
-      </ul>
-      <button onclick="addKeepTogether()">Add new</button><br>
+   <div id="keepTogetherRow">
+      <p>Keep together <button onclick="addKeepTogether()">+</button><br>
+      
    </div>
-   <div class="constraintRow">
-      <p>Better kept separated
-      <ul id="keepSeparate" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
-      </ul>
-      <button onclick="addKeepSeparate()">Add new</button>
+   <div id="keepSeparateRow">
+      <p>Better kept separated <button onclick="addKeepSeparate()">+</button>
+      
    </div>
 </div>
 
