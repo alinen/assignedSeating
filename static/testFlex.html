@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0;text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title>Test Flex</title>
+<style>
+.droplist
+{
+   min-height: 20px;
+   border-style: dotted;
+   background-color: rgb(200,255,200);
+}
+</style>
+<script>
+
+guestList = [];
+function onLoad()
+{
+   guestList = [];
+   guestList.push("A"); 
+   guestList.push("B"); 
+   guestList.push("C"); 
+   guestList.push("D"); 
+   guestList.push("E"); 
+   guestList.push("F"); 
+   guestList.push("G"); 
+
+   var listHTML = '';
+   for (var i = 0; i < guestList.length; i++)
+   {
+      var name = guestList[i].trim();
+      if (name === "") continue;
+      listHTML += '<li id='+name+' draggable=true ondragstart="drag(event)">'+name+'</li>';
+   }
+
+   document.getElementById('guestlist').innerHTML = listHTML;
+}
+
+function addKeepTogether()
+{
+}
+
+function addKeepSeparate()
+{
+}
+
+function allowDrop(ev)
+{
+   ev.preventDefault();
+}
+
+function drag(ev)
+{
+   ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev)
+{
+   ev.preventDefault();
+   var data = ev.dataTransfer.getData("text");
+   var element = document.getElementById(data);
+
+   var target = ev.target;
+   if (target.tagName === "LI") target = target.parentNode;
+
+   console.log(data+ " "+element.tagName+" "+target.tagName);
+   target.appendChild(element);
+}
+
+</script>
+</head>
+
+<body onload="onLoad();">
+<div class="left">
+   <p>All Guests
+   <ul id="guestlist" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
+   </ul>
+</div>
+<div class="right">
+   <div class="constraintRow">
+      <p>Keep together
+      <ul id="keepTogether" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
+      </ul>
+      <button onclick="addKeepTogether()">Add new</button><br>
+   </div>
+   <div class="constraintRow">
+      <p>Better kept separated
+      <ul id="keepSeparate" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
+      </ul>
+      <button onclick="addKeepSeparate()">Add new</button>
+   </div>
+</div>
+
+</body>
+</html>
