@@ -24,6 +24,24 @@
    border-radius: 10px;
    padding: 0.1em;
 }
+.leftFloatPanel
+{
+   float: left;
+   border-radius: 10px;
+   background-color: rgb(100,200,200);
+   margin: 0.1em;
+}
+
+p, p.title
+{
+   padding-left:0.5em;
+}
+
+p.title
+{
+   border-bottom:solid;
+}
+
 .horizontalContainer
 {
    display: flex;
@@ -103,18 +121,21 @@ function drop(ev)
 </head>
 
 <body onload="onLoad();">
-<div class="left">
-   <p>All Guests
+<div id="contents">
+<div class="leftFloatPanel" style="width: 25%">
+   <p class="title">All Guests
    <ul id="guestlist" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
    </ul>
 </div>
-<div class="right">
+<div class="leftFloatPanel" style="width: 70%">
+   <p class="title">Constraints
    <p>Keep together <button onclick="addKeepTogether()">+</button><br>
    <div id="keepTogetherRow" class="horizontalContainer">
    </div>
    <p>Better kept separated <button onclick="addKeepSeparate()">+</button>
    <div id="keepSeparateRow" class="horizontalContainer">
    </div>
+</div>
 </div>
 
 </body>
