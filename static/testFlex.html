@@ -98,8 +98,8 @@ function addKeepTogether()
    gElementId++;
    console.log("addKeepTogether "+name);
    var newList = "";
-   newList += '<div>';
-   newList += '<ul id="'+name+ '" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+   newList += '<div id="'+name+ '" >';
+   newList += '<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
    newList += '<button id="'+name+'" class="removeButton" onclick="removeKeepTogether(event)">-</button>';
    newList += '</div>';
    document.getElementById('keepTogetherRow').insertAdjacentHTML('beforeend', newList);
@@ -138,32 +138,42 @@ function drop(ev)
    var target = ev.target;
    if (target.tagName === "LI") target = target.parentNode;
 
-   console.log(data+ " "+element.tagName+" "+target.tagName);
-   target.appendChild(element);
+   //console.log(data+ " "+element.tagName+" "+target.tagName);
+
+   var hasElement = false;
+   var liList = target.getElementsByTagName('li');
+   for (var i = 0; i < liList.length && !hasElement; i++)
+   {
+      var name = liList[i].id;
+      if (name === data)
+      {
+          hasElement = true;
+          console.log("Duplicate, ignoring "+name);
+      }
+   }
+
+   if (!hasElement)
+   {
+      var newElement = element.cloneNode(true);
+      target.appendChild(newElement);
+   }
 }
 
 function removeKeepTogether(event)
 {
-   var name = event.target.id;
-   console.log("KEEP TOGETHER "+name);
-   
+   var divName = event.target.id;
+   var parent = document.getElementById("keepTogetherRow");
+   console.log("KEEP TOGETHER "+divName+" "+parent.id);
+   var divEle = document.getElementById(divName);
+   parent.removeChild(divEle);
 }
 
 function removeKeepSeparate(event)
 {
    var divName = event.target.id;
    var parent = document.getElementById("keepSeparateRow");
-   console.log("KEEP SEPARATE "+name+" "+parent.id);
+   //console.log("KEEP SEPARATE "+divName+" "+parent.id);
    var divEle = document.getElementById(divName);
-   var liList = divEle.getElementsByTagName('li');
-   var guestlistEle = document.getElementById('guestlist');
-   for (var i = 0; i < liList.length; i++)
-   {
-      var name = liList[i].id;
-      console.log("Moving back "+name);
-      guestlistEle.appendChild(liList[i]);
-      
-   }
    parent.removeChild(divEle);
 }
 
@@ -172,7 +182,7 @@ function removeKeepSeparate(event)
 
 <body onload="onLoad();">
 <div id="contents">
-<div class="leftFloatPanel" style="width: 15%">
+<div class="leftFloatPanel" style="width: 15%; padding-bottom: 1em;">
    <p class="title">All Guests
    <ul id="guestlist" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
    </ul>
