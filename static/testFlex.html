@@ -14,6 +14,7 @@
    list-style-type: none;
    margin-left: 0.5em;
    padding: 0.5em;
+   margin-bottom:0em;
 }
 .droplistitem
 {
@@ -30,6 +31,23 @@
    border-radius: 10px;
    background-color: rgb(100,200,200);
    margin: 0.1em;
+}
+
+.smallButton, .removeButton
+{
+   height:2em;
+   width:2em;
+   border-radius: 5px;
+   background-color: rgb(255,255,255);
+   border: solid;
+   border-width: 1px;
+}
+
+.removeButton
+{
+   position: relative;
+   left:200px;
+   bottom: 2em;
 }
 
 p, p.title
@@ -79,8 +97,11 @@ function addKeepTogether()
    var name = "keepTogether"+gElementId;
    gElementId++;
    console.log("addKeepTogether "+name);
-   var newList = '<ul id="'+name+
-      '" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+   var newList = "";
+   newList += '<div>';
+   newList += '<ul id="'+name+ '" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+   newList += '<button id="'+name+'" class="removeButton" onclick="removeKeepTogether(event)">-</button>';
+   newList += '</div>';
    document.getElementById('keepTogetherRow').insertAdjacentHTML('beforeend', newList);
 }
 
@@ -89,8 +110,12 @@ function addKeepSeparate()
    var name = "keepSeperate"+gElementId;
    gElementId++;
    console.log("addKeepSeparate "+name);
-   var newList = '<ul id="'+name+
-      '" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+   var newList = "";
+   newList += '<div id="'+name+'">';
+   newList += '<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">';
+   newList += '</ul>';
+   newList += '<button id="'+name+'" class="removeButton" onclick="removeKeepSeparate(event)">-</button>';
+   newList += '</div>';
    document.getElementById('keepSeparateRow').insertAdjacentHTML('beforeend', newList);
 }
 
@@ -117,22 +142,47 @@ function drop(ev)
    target.appendChild(element);
 }
 
+function removeKeepTogether(event)
+{
+   var name = event.target.id;
+   console.log("KEEP TOGETHER "+name);
+   
+}
+
+function removeKeepSeparate(event)
+{
+   var divName = event.target.id;
+   var parent = document.getElementById("keepSeparateRow");
+   console.log("KEEP SEPARATE "+name+" "+parent.id);
+   var divEle = document.getElementById(divName);
+   var liList = divEle.getElementsByTagName('li');
+   var guestlistEle = document.getElementById('guestlist');
+   for (var i = 0; i < liList.length; i++)
+   {
+      var name = liList[i].id;
+      console.log("Moving back "+name);
+      guestlistEle.appendChild(liList[i]);
+      
+   }
+   parent.removeChild(divEle);
+}
+
 </script>
 </head>
 
 <body onload="onLoad();">
 <div id="contents">
-<div class="leftFloatPanel" style="width: 25%">
+<div class="leftFloatPanel" style="width: 15%">
    <p class="title">All Guests
    <ul id="guestlist" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
    </ul>
 </div>
-<div class="leftFloatPanel" style="width: 70%">
+<div class="leftFloatPanel" style="width: 80%">
    <p class="title">Constraints
-   <p>Keep together <button onclick="addKeepTogether()">+</button><br>
+   <p>Keep together <button class="smallButton" onclick="addKeepTogether()">+</button><br>
    <div id="keepTogetherRow" class="horizontalContainer">
    </div>
-   <p>Better kept separated <button onclick="addKeepSeparate()">+</button>
+   <p>Better kept separated <button class="smallButton" onclick="addKeepSeparate()">+</button>
    <div id="keepSeparateRow" class="horizontalContainer">
    </div>
 </div>
