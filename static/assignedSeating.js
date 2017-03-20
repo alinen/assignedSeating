@@ -1,30 +1,171 @@
+var gElementId = 1;
 var guestList = [];
 var friends = [];
 var enemies = [];
 
-function readCSV(f)
+function onLoad()
 {
-   guestList = [];
+   initFileReader();
+}
+
+function setGuestList()
+{
+   var listHTML = '';
+   for (var i = 0; i < guestList.length; i++)
+   {
+      var name = guestList[i].trim();
+      if (name === "") continue;
+      listHTML += '<li id="'+name+'" class="droplistitem" draggable=true ondragstart="drag(event)">'+name+'</li>';
+   }
+
+   document.getElementById('guestlist').innerHTML = listHTML;
+}
+
+function addKeepTogether()
+{
+   var name = "keepTogether"+gElementId;
+   gElementId++;
+   //console.log("addKeepTogether "+name);
+   var newList = "";
+   newList += '<div id="'+name+ '" >';
+   newList += '<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+   newList += '<button id="'+name+'" class="removeButton" onclick="removeKeepTogether(event)">X</button>';
+   newList += '</div>';
+
+   var row = document.getElementById('keepTogetherRow');
+   row.insertAdjacentHTML('beforeend', newList);
+
+   var ulLists = row.querySelectorAll('ul.droplist');
+   return ulLists[ulLists.length-1];
+}
+
+function addKeepSeparate()
+{
+   var name = "keepSeperate"+gElementId;
+   gElementId++;
+   console.log("addKeepSeparate "+name);
+   var newList = "";
+   newList += '<div id="'+name+'">';
+   newList += '<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">';
+   newList += '</ul>';
+   newList += '<button id="'+name+'" class="removeButton" onclick="removeKeepSeparate(event)">X</button>';
+   newList += '</div>';
+
+	var row = document.getElementById('keepSeparateRow');
+   row.insertAdjacentHTML('beforeend', newList);
+
+   var ulLists = row.querySelectorAll('ul.droplist');
+   return ulLists[ulLists.length-1];
+}
+
+function allowDrop(ev)
+{
+   ev.preventDefault();
+}
+
+function drag(ev)
+{
+   ev.dataTransfer.setData("GuestName", ev.target.id);
+}
+
+function drop(ev)
+{
+   ev.preventDefault();
+   var guestName = ev.dataTransfer.getData("GuestName");
+
+   var dropTarget = ev.target;
+   if (dropTarget.tagName === "LI") dropTarget = dropTarget.parentNode;
+
+   //console.log(guestName+ " "+element.tagName+" "+target.tagName);
+
+   addGuestNameToList(dropTarget, guestName);
+}
+
+function addGuestNameToList(ulList, guestName)
+{
+   var element = document.getElementById(guestName);
+
+   var hasElement = false;
+   var liList = ulList.getElementsByTagName('li');
+   for (var i = 0; i < liList.length && !hasElement; i++)
+   {
+      var name = liList[i].id;
+      if (name === guestName)
+      {
+          hasElement = true;
+          console.log("Duplicate, ignoring "+name);
+      }
+   }
+
+   if (!hasElement)
+   {
+      var newElement = element.cloneNode(true);
+      ulList.appendChild(newElement);
+   }
+}
+
+function clearRowDiv(parent)
+{
+   while (parent.hasChildNodes())
+	{
+		parent.removeChild(parent.lastChild);
+	}
+}
+
+function removeKeepTogether(event)
+{
+   var divName = event.target.id;
+   var parent = document.getElementById("keepTogetherRow");
+   //console.log("KEEP TOGETHER "+divName+" "+parent.id);
+   var divEle = document.getElementById(divName);
+   parent.removeChild(divEle);
+}
+
+function removeKeepSeparate(event)
+{
+   var divName = event.target.id;
+   var parent = document.getElementById("keepSeparateRow");
+   //console.log("KEEP SEPARATE "+divName+" "+parent.id);
+   var divEle = document.getElementById(divName);
+   parent.removeChild(divEle);
+}
+
+function readGuestListCSV(f)
+{
    if (f.type.match('text/csv')) 
    {
+      guestList = [];
+      togetherConstraints = [];
+      separatedConstraints = [];
       var reader = new FileReader();
       reader.onload = (function(fileContents) 
       {
          return function(e) 
          {
             var output = e.target.result.split('\n');
-            var listHTML = '<ul>';
             for (var i = 0; i < output.length; i++)
             {
                var name = output[i].trim();
                if (name === "") continue;
-               listHTML += '<li><strong>'+name+'</strong></li>';
-               guestList.push(name);
-               friends.push([]);
-               enemies.push([]);
+               if (name[0] === '+') togetherConstraints.push(name);
+               else if (name[0] === '-') separatedConstraints.push(name);
+               else guestList.push(name);
             }
-            listHTML += '</ul>';
-            document.getElementById('list').innerHTML = listHTML;
+            setGuestList();
+
+   			var keepTogether = document.getElementById("keepTogetherRow");
+            clearRowDiv(keepTogether);
+            for (var i = 0; i < togetherConstraints.length; i++)
+            {
+					addKeepTogetherConstraint(togetherConstraints[i]);
+				}
+
+   			var keepSeparate = document.getElementById("keepSeparateRow");
+            clearRowDiv(keepSeparate);
+            for (var i = 0; i < separatedConstraints.length; i++)
+            {
+					addKeepSeparatedConstraint(separatedConstraints[i]);
+				}
          };
       })(f);
 
@@ -37,12 +178,12 @@ function readCSV(f)
    }
 }
 
-function handleFileSelect(evt) 
+function handleBrowseGuestList(evt) 
 {
    var files = evt.target.files; // FileList object
    if (files.length > 0)
    {
-      readCSV(files[0]);
+      readGuestListCSV(files[0]);
    }
 }
 
@@ -65,18 +206,13 @@ function handleDragOver(evt)
    evt.dataTransfer.dropEffect = 'upload'; // Explicitly show this is a copy.
 }
 
-function onLoad()
+function initFileReader()
 {
    // Check for the various File API support.
    if (window.File && window.FileReader && window.FileList && window.Blob) 
    {
-      // Setup the dnd listeners.
-      var dropZone = document.getElementById('dropZone');
-      dropZone.addEventListener('dragover', handleDragOver, false);
-      dropZone.addEventListener('drop', handleFileDrag, false);
-
-      var fileButton = document.getElementById('files');
-      fileButton.addEventListener('change', handleFileSelect, false);
+      var fileButton = document.getElementById('browseButton');
+      fileButton.addEventListener('change', handleBrowseGuestList, false);
    } 
    else 
    {
@@ -88,7 +224,7 @@ function areFriends(i, j)
 {
    for (var ii = 0; ii < friends[i].length; ii++)
    {
-      if (guestList[i] === friends[i][ii]) return true;
+      if (guestList[j] === friends[i][ii]) return true;
    }
    return false;
 }
@@ -97,9 +233,84 @@ function areEnemies(i, j)
 {
    for (var ii = 0; ii < enemies[i].length; ii++)
    {
-      if (guestList[i] === enemies[i][ii]) return true;
+      if (guestList[j] === enemies[i][ii]) return true;
    }
    return false;
+}
+
+function getConstraintString(rowDiv, prefix)
+{
+   var contents = "";
+   for (var i = 0; i < rowDiv.children.length; i++)
+	{
+		var div = rowDiv.children[i];
+      var names = div.querySelectorAll("li.droplistitem");
+      if (names.length < 2) continue; 
+      contents += prefix; // todo: get strength from list
+      for (var j = 0; j < names.length; j++)
+		{
+			contents += ","+names[j].id;
+		}
+      contents += "\n";
+	}
+	return contents;
+}
+
+function onSaveConstraints()
+{
+   if (guestList.length < 2) return;
+
+   // Output guest list and constraints
+   // They both can be reloaded together on next Browse load
+	var contents = "";
+   for (var i = 0; i < guestList.length; i++)
+	{
+		contents += guestList[i]+"\n";
+	}
+
+   var keepTogetherRow = document.getElementById("keepTogetherRow");
+   contents += getConstraintString(keepTogetherRow, "+1");
+
+   var keepSeparateRow = document.getElementById("keepSeparateRow");
+   contents += getConstraintString(keepSeparateRow, "-1");
+
+   var blob = new Blob([contents], {type: "text/csv;charset=utf-8"});
+   var a = document.createElement("a");
+   var url = URL.createObjectURL(blob);
+   a.href = url;
+   a.download = "guestsWithConstraints.csv";
+   document.body.appendChild(a);
+   a.click();
+   setTimeout(function() {
+       document.body.removeChild(a);
+       window.URL.revokeObjectURL(url);
+   }, 0);
+}
+
+function addKeepSeparatedConstraint(constraintStr)
+{
+	var ulList = addKeepSeparate();
+
+   // tokenize string by comma
+   var tokens = constraintStr.split(",");
+   // TODO: First item is the strength of the constraint +1, +2
+   for (var i = 1; i < tokens.length; i++)
+	{
+		addGuestNameToList(ulList, tokens[i]);
+	}	
+}
+
+function addKeepTogetherConstraint(constraintStr)
+{
+	var ulList = addKeepTogether();
+
+   // tokenize string by comma
+   var tokens = constraintStr.split(",");
+   // TODO: First item is the strength of the constraint +1, +2
+   for (var i = 1; i < tokens.length; i++)
+	{
+		addGuestNameToList(ulList, tokens[i]);
+	}	
 }
 
 function onAssign()

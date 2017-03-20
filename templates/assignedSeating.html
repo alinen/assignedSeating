@@ -9,12 +9,28 @@
 
 <body onload="onLoad()">
 <h3>Assigned Seating</h3>
-<div id="dropZone">Drop guest list here (CSV)</div>
-<input type="file" id="files" /><br>
+<input type="file" id="browseButton" /><br>
 Num Tables: <input type="number" id="NumTablesInput" value="10"><br>
 Num Per Table: <input type="number" id="NumPerTableInput" value="10"><br>
 <button onclick="onAssign()">Assign</button> <br>
-<output id="list"></output>
+<button onclick="onSaveConstraints()">SaveConstraints</button> <br>
+
+<div id="contents">
+<div class="leftFloatPanel" style="width: 15%; padding-bottom: 1em;">
+   <p class="title">All Guests
+   <ul id="guestlist" class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)">
+   </ul>
+</div>
+<div class="leftFloatPanel" style="width: 80%">
+   <p class="title">Constraints
+   <p>Keep together <button class="smallButton" onclick="addKeepTogether()">+</button><br>
+   <div id="keepTogetherRow" class="horizontalContainer">
+   </div>
+   <p>Better kept separated <button class="smallButton" onclick="addKeepSeparate()">+</button>
+   <div id="keepSeparateRow" class="horizontalContainer">
+   </div>
+</div>
+</div>
 
 </body>
 </html>
