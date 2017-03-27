@@ -1,11 +1,13 @@
 var gElementId = 1;
 var guestList = [];
+var nameToId = {}
 var friends = [];
 var enemies = [];
 
 function onLoad()
 {
    initFileReader();
+	createTables();
 }
 
 function createTables()
@@ -176,6 +178,7 @@ function readGuestListCSV(f)
    if (f.type.match('text/csv')) 
    {
       guestList = [];
+		nameToId = {};
       togetherConstraints = [];
       separatedConstraints = [];
       var reader = new FileReader();
@@ -190,7 +193,11 @@ function readGuestListCSV(f)
                if (name === "") continue;
                if (name[0] === '+') togetherConstraints.push(name);
                else if (name[0] === '-') separatedConstraints.push(name);
-               else guestList.push(name);
+               else 
+               {
+                  guestList.push(name);
+						nameToId[name] = guestList.length-1;
+               }
             }
             setGuestList();
 
@@ -261,22 +268,28 @@ function initFileReader()
    }   
 }
 
-function areFriends(i, j)
+function getConstraints(rowDiv)
 {
-   for (var ii = 0; ii < friends[i].length; ii++)
-   {
-      if (guestList[j] === friends[i][ii]) return true;
-   }
-   return false;
-}
-
-function areEnemies(i, j)
-{
-   for (var ii = 0; ii < enemies[i].length; ii++)
-   {
-      if (guestList[j] === enemies[i][ii]) return true;
-   }
-   return false;
+	constraints = [];
+   for (var i = 0; i < rowDiv.children.length; i++)
+	{
+		var div = rowDiv.children[i];
+      var names = div.querySelectorAll("li.droplistitem");
+      if (names.length < 2) continue; 
+      
+      for (var ii = 0; ii < names.length; ii++)
+		{
+			var namei = names[ii].id;
+			var idi = nameToId[namei];
+      	for (var jj = ii+1; jj < names.length; jj++)
+			{
+            var namej = names[jj].id; 
+				var idj = nameToId[namej];
+				constraints.push([idi, idj]);
+			}
+		}
+	}
+	return constraints;
 }
 
 function getConstraintString(rowDiv, prefix)
@@ -354,6 +367,24 @@ function addKeepTogetherConstraint(constraintStr)
 	}	
 }
 
+function fetchTableSizes()
+{
+	var tablesRow = document.getElementById("tablesRow");
+   var tableSizes = tablesRow.querySelectorAll("input.listInput");
+   if (tableSizes.length === 0)
+	{
+		console.log("WARNING: tableSizes is empty");
+		return "";
+	}
+
+   var sizeArrayStr = tableSizes[0].value;
+   for (var s = 1; s < tableSizes.length; s++)
+	{
+		sizeArrayStr += "," + tableSizes[s].value;
+	}
+	return sizeArrayStr;
+}
+
 function onAssign()
 {
    if (guestList.length === 0)
@@ -364,18 +395,29 @@ function onAssign()
 
    var numTables = document.getElementById('NumTablesInput').value;
    var numPerTable = document.getElementById('NumPerTableInput').value;
-   var requestUrl = 'aseat/api/v1.0/assign/'+numTables+':'+numPerTable+':'+guestList.length+':';
+   var requestUrl = 'aseat/api/v1.0/assign/'+numTables+':'+fetchTableSizes()+':'+guestList.length+':';
    //console.log(requestUrl);
 
-   for (var i = 0; i < guestList.length; i++)
+   var keepTogetherRow = document.getElementById("keepTogetherRow");
+   var keepTogetherConstraints = getConstraints(keepTogetherRow);
+	requestUrl += keepTogetherConstraints.length+':';
+   for (var i = 0; i < keepTogetherConstraints.length; i++)
    {
-      for (var j = 0; j < guestList.length; j++)
-      {
-         if (areFriends(i,j)) requestUrl += '1'; 
-         else if (areEnemies(i,j)) requestUrl += '-1';
-         else requestUrl += '0';
-      }
+       requestUrl += keepTogetherConstraints[i][0]+',';
+       requestUrl += keepTogetherConstraints[i][1]+',';
    }
+
+   var keepSeparateRow = document.getElementById("keepSeparateRow");
+   var keepSeparateConstraints = getConstraints(keepSeparateRow);
+	requestUrl += ':'+keepSeparateConstraints.length+':';
+   for (var i = 0; i < keepSeparateConstraints.length; i++)
+   {
+       requestUrl += keepSeparateConstraints[i][0]+',';
+       requestUrl += keepSeparateConstraints[i][1]+',';
+   }
+
+	//console.log(requestUrl);
+
    var request = new XMLHttpRequest();
    request.open('GET', requestUrl, true);
    request.send(null);
