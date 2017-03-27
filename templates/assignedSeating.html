@@ -10,8 +10,6 @@
 <body onload="onLoad()">
 <h3>Assigned Seating</h3>
 <input type="file" id="browseButton" /><br>
-Num Tables: <input type="number" id="NumTablesInput" value="10"><br>
-Num Per Table: <input type="number" id="NumPerTableInput" value="10"><br>
 <button onclick="onAssign()">Assign</button> <br>
 <button onclick="onSaveConstraints()">SaveConstraints</button> <br>
 
@@ -28,6 +26,16 @@ Num Per Table: <input type="number" id="NumPerTableInput" value="10"><br>
    </div>
    <p>Better kept separated <button class="smallButton" onclick="addKeepSeparate()">+</button>
    <div id="keepSeparateRow" class="horizontalContainer">
+   </div>
+</div>
+<div class="leftFloatPanel" style="width: 80%">
+   <p class="title">Tables</p>
+   Number of tables: <input type="number" id="NumTablesInput" value="10"><br>
+   Average guests per table: <input type="number" id="NumPerTableInput" value="10"><br>
+   <button onclick="createTables()">Create tables</button>
+   <div id="tablesRow" class="horizontalContainer">
+   </div>
+   <br>
    </div>
 </div>
 </div>

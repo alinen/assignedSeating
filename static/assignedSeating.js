@@ -8,6 +8,47 @@ function onLoad()
    initFileReader();
 }
 
+function createTables()
+{
+   clearTables();
+   var numTables = document.getElementById('NumTablesInput').value;
+   var numPerTable = document.getElementById('NumPerTableInput').value;
+
+	for (var i = 0; i < numTables; i++)
+	{
+		createTable(i, numPerTable);
+	}
+}
+
+function clearTables()
+{
+   var tablesDiv = document.getElementById("tablesRow");
+	clearRowDiv(tablesDiv);
+}
+
+function createTable(id, numPerTable)
+{
+   var name = "table"+id;
+   console.log("createTable "+name);
+   var newList = "";
+   newList += '<div id="'+name+ '" >';
+   newList += '<input id="'+name+'" class="listInput" type="number" value="'+numPerTable+'">';
+   newList += '<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+
+   var row = document.getElementById('tablesRow');
+   row.insertAdjacentHTML('beforeend', newList);
+
+	for (var i = 0; i < numPerTable; i++)
+	{
+      newList += '<li id="empty" class="droplistitem" draggable=true ondragstart="drag(event)"></li>';
+		
+	}
+   newList += '</div>';
+
+   var ulLists = row.querySelectorAll('ul.droplist');
+   return ulLists[ulLists.length-1];
+}
+
 function setGuestList()
 {
    var listHTML = '';

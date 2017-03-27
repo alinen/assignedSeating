@@ -27,6 +27,31 @@
    margin: 0.1em;
 }
 
+.listInput
+{
+   height:1em;
+   width:2em;
+   background-color: rgb(255,255,255);
+   position: relative;
+	top: 2.5em;
+	border-radius: 10em;
+	text-align: center;
+	border: solid;
+	border-width: 1px;
+	left: 190px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+
 .smallButton, .removeButton
 {
    height:2em;
