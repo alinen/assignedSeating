@@ -26,6 +26,12 @@ def assignSeats(name):
         capacity += val
          
     #print tableSizes, capacity
+    file = open('sampledata.txt', 'w')
+    file.write("%d\n"%numTables);
+    for tableSize in tableSizes:
+       file.write("%d "%tableSize);
+    file.write('\n');
+
     if numGuests > capacity:
        print "Not enough seats: ", capacity, "<", numGuests
        return ""; # return HTML error code too?
@@ -50,6 +56,13 @@ def assignSeats(name):
         affinityMatrix[guestj][guesti] = -1;
 
     print affinityMatrix
+    file.write("%d\n"%numGuests)
+    for i in range(numGuests): 
+        for j in range(numGuests):
+            file.write("%d "%affinityMatrix[i][j])
+        file.write('\n');
+
+    file.close()
 
     clusterIdx = cluster.spectral_clustering(affinityMatrix, numTables)
 
@@ -72,6 +85,6 @@ def testAssign():
     print assignSeats(params)
 
 if __name__ == "__main__":
-    #app.run(threaded=True)
-    testAssign()
+    app.run(threaded=True)
+    #testAssign()
 
