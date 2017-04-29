@@ -21,11 +21,29 @@
 </div>
 <div class="leftFloatPanel" style="width: 70%">
    <p class="title">Constraints
-   <p>Keep together <button class="smallButton" onclick="addKeepTogether()">+</button><br>
+   <p>Keep together
    <div id="keepTogetherRow" class="horizontalContainer">
+		<div id='keepTogetherList'>
+			<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
+		</div>
    </div>
-   <p>Better kept separated <button class="smallButton" onclick="addKeepSeparate()">+</button>
+   <p>Better kept together
+   <div id="betterKeptTogetherRow" class="horizontalContainer">
+		<div id='betterKeptTogetherList'>
+			<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
+		</div>
+   </div>
+   <p>Better kept separated
+   <div id="betterKeptSeparateRow" class="horizontalContainer">
+		<div id='betterKeptSeparateList'>
+			<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
+		</div>
+   </div>
+   <p>Keep separate
    <div id="keepSeparateRow" class="horizontalContainer">
+		<div id='keepSeparateList'>
+			<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
+		</div>
    </div>
 </div>
 <div class="leftFloatPanel" style="width: 70%">

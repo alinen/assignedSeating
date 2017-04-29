@@ -1,8 +1,6 @@
 var gElementId = 1;
 var guestList = [];
 var nameToId = {}
-var friends = [];
-var enemies = [];
 
 function onLoad()
 {
@@ -201,6 +199,7 @@ function readGuestListCSV(f)
             }
             setGuestList();
 
+/*
    			var keepTogether = document.getElementById("keepTogetherRow");
             clearRowDiv(keepTogether);
             for (var i = 0; i < togetherConstraints.length; i++)
@@ -214,6 +213,7 @@ function readGuestListCSV(f)
             {
 					addKeepSeparatedConstraint(separatedConstraints[i]);
 				}
+*/
          };
       })(f);
 
