@@ -1,6 +1,8 @@
 var gElementId = 1;
 var guestList = [];
 var nameToId = {}
+var constraints = []
+var selectedGuest = "";
 
 function onLoad()
 {
@@ -56,7 +58,7 @@ function setGuestList()
    {
       var name = guestList[i].trim();
       if (name === "") continue;
-      listHTML += '<li id="'+name+'" class="droplistitem" draggable=true ondragstart="drag(event)">'+name+'</li>';
+      listHTML += '<li id="'+name+'" class="droplistitem" draggable=true ondragstart="drag(event)" onclick="selectGuest(event)">'+name+'</li>';
    }
 
    document.getElementById('guestlist').innerHTML = listHTML;
@@ -97,6 +99,98 @@ function addKeepSeparate()
 
    var ulLists = row.querySelectorAll('ul.droplist');
    return ulLists[ulLists.length-1];
+}
+
+function getConstraint(id1, id2)
+{
+	for (var i = 0; i < constraints[id1].length; i++)
+	{
+		if (constraints[id1][i].id === id2)
+		{
+			return constraints[id1][i].valence;
+		}
+   }
+	return -1;
+}
+
+function setConstraint(id1, id2, value)
+{
+	constraints[id1].push({id: id2, valence: value});
+	constraints[id2].push({id: id1, valence: value});
+}
+
+function saveListConstraints(guestName, elementName, value)
+{
+	var guestNameId = nameToId[guestName];
+
+	var div = document.getElementById(elementName);
+   var names = div.querySelectorAll("li.droplistitem");
+	for (var i = 0; i < names.length; i++)
+	{
+		var name = names[i].id;
+		var nameId = nameToId[name];
+		var v = getConstraint(guestNameId, nameId);
+		if (v === -1) 
+		{
+			setConstraint(guestNameId, nameId, value);
+		}
+		else if (v !== value) 
+		{
+			console.log("WARNING: Contradictory valence "+v+" != "+value+" between "+guestName+" "+name);
+		}
+   }
+}
+
+function clearListConstraints(elementName)
+{
+	var list = document.getElementById(elementName);
+	list.innerHTML = '<ul class="droplist" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>';
+}
+
+function saveDisplayedConstraints(guestName)
+{
+	saveListConstraints(guestName, "keepTogetherList", 2);
+	saveListConstraints(guestName, "betterKeptTogetherList", 1);
+	saveListConstraints(guestName, "betterKeptSeparateList", -1);
+	saveListConstraints(guestName, "keepSeparateList", -2);
+
+	clearListConstraints("keepTogetherList");
+	clearListConstraints("betterKeptTogetherList");
+	clearListConstraints("betterKeptSeparateList");
+	clearListConstraints("keepSeparateList");
+}
+
+function displayConstraints(guestName)
+{
+	var title = document.getElementById("Constraints");
+	title.innerHTML = "Constraints for <b>"+guestName+"</b>";
+   
+	var keepTogether = document.getElementById("keepTogetherList").children[0];
+	var betterKeptTogether = document.getElementById("betterKeptTogetherList").children[0];
+	var betterKeptSeparate = document.getElementById("betterKeptSeparateList").children[0];
+	var keepSeparate = document.getElementById("keepSeparateList").children[0];
+
+	var id = nameToId[guestName];
+	for (var i = 0; i < constraints[id].length; i++)
+	{
+		var name = guestList[constraints[id][i].id];
+		var valence = constraints[id][i].valence;
+		if (valence === 2) addGuestNameToList(keepTogether, name);
+		else if (valence === 1) addGuestNameToList(betterKeptTogether, name);
+		else if (valence === -1) addGuestNameToList(betterKeptSeparate, name);
+		else if (valence === -2) addGuestNameToList(keepSeparate, name);
+	}
+}
+
+function selectGuest(ev)
+{
+	if (ev.target.id !== selectedGuest)
+	{
+		//console.log("YOU CLICKED "+ev.target.id);
+		saveDisplayedConstraints(selectedGuest); 
+		selectedGuest = ev.target.id;
+		displayConstraints(selectedGuest);
+	}
 }
 
 function allowDrop(ev)
@@ -189,8 +283,8 @@ function readGuestListCSV(f)
    {
       guestList = [];
 		nameToId = {};
-      togetherConstraints = [];
-      separatedConstraints = [];
+		constraints = [];
+
       var reader = new FileReader();
       reader.onload = (function(fileContents) 
       {
@@ -201,15 +295,46 @@ function readGuestListCSV(f)
             {
                var name = output[i].trim();
                if (name === "") continue;
-               if (name[0] === '+') togetherConstraints.push(name);
-               else if (name[0] === '-') separatedConstraints.push(name);
+
+               var tokens = name.split(",");
+               if (tokens[0] === "+2")
+					{
+                   var id1 = nameToId[tokens[1]];
+                   var id2 = nameToId[tokens[2]];
+						 constraints[id1].push({id: id2, valence: 2});
+						 constraints[id2].push({id: id1, valence: 2});
+					}
+               else if (tokens[0] === "+1")
+					{
+                   var id1 = nameToId[tokens[1]];
+                   var id2 = nameToId[tokens[2]];
+						 constraints[id1].push({id: id2, valence: 1});
+						 constraints[id2].push({id: id1, valence: 1});
+					}
+               else if (tokens[0] === "-1")
+					{
+                   var id1 = nameToId[tokens[1]];
+                   var id2 = nameToId[tokens[2]];
+						 constraints[id1].push({id: id2, valence: -1});
+						 constraints[id2].push({id: id1, valence: -1});
+					}
+               else if (tokens[0] === "-2")
+					{
+                   var id1 = nameToId[tokens[1]];
+                   var id2 = nameToId[tokens[2]];
+						 constraints[id1].push({id: id2, valence: -2});
+						 constraints[id2].push({id: id1, valence: -2});
+					}
                else 
                {
                   guestList.push(name);
 						nameToId[name] = guestList.length-1;
+                  constraints.push([]);
                }
             }
             setGuestList();
+				selectedGuest = guestList[0];
+				displayConstraints(selectedGuest);
 
 /*
    			var keepTogether = document.getElementById("keepTogetherRow");
@@ -280,58 +405,23 @@ function initFileReader()
    }   
 }
 
-function getConstraints(rowDiv)
-{
-	constraints = [];
-   for (var i = 0; i < rowDiv.children.length; i++)
-	{
-		var div = rowDiv.children[i];
-      var names = div.querySelectorAll("li.droplistitem");
-      if (names.length < 2) continue; 
-      
-      for (var ii = 0; ii < names.length; ii++)
-		{
-			var namei = names[ii].id;
-			var idi = nameToId[namei];
-      	for (var jj = ii+1; jj < names.length; jj++)
-			{
-            var namej = names[jj].id; 
-				var idj = nameToId[namej];
-				constraints.push([idi, idj]);
-			}
-		}
-	}
-	return constraints;
-}
-
-function getConstraintString(rowDiv, prefix)
-{
-   var contents = "";
-   for (var i = 0; i < rowDiv.children.length; i++)
-	{
-		var div = rowDiv.children[i];
-      var names = div.querySelectorAll("li.droplistitem");
-      if (names.length < 2) continue; 
-      contents += prefix; // todo: get strength from list
-      for (var j = 0; j < names.length; j++)
-		{
-			contents += ","+names[j].id;
-		}
-      contents += "\n";
-	}
-	return contents;
-}
-
 function onSaveConstraints()
 {
    if (guestList.length < 2) return;
 
    // Output guest list and constraints
    // They both can be reloaded together on next Browse load
+
 	var contents = "";
    for (var i = 0; i < guestList.length; i++)
 	{
 		contents += guestList[i]+"\n";
+	}
+
+/* ASN TODO
+	for (var i = 0; i < guestList.length; i++)
+	{
+		for (var j = 0; j < 
 	}
 
    var keepTogetherRow = document.getElementById("keepTogetherRow");
@@ -351,6 +441,7 @@ function onSaveConstraints()
        document.body.removeChild(a);
        window.URL.revokeObjectURL(url);
    }, 0);
+*/
 }
 
 function addKeepSeparatedConstraint(constraintStr)
@@ -405,6 +496,7 @@ function onAssign()
       return;
    }
 
+/* ASN TODO: UPDATE
    var numTables = document.getElementById('NumTablesInput').value;
    var numPerTable = document.getElementById('NumPerTableInput').value;
    var requestUrl = 'aseat/api/v1.0/assign/'+numTables+':'+fetchTableSizes()+':'+guestList.length+':';
@@ -466,4 +558,5 @@ function onAssign()
            document.getElementById('list').innerHTML = tables.join(' ');           
        }
    }
+*/
 }
