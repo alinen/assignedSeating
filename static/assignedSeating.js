@@ -117,30 +117,42 @@ function drop(ev)
    var dropTarget = ev.target;
    if (dropTarget.tagName === "LI") dropTarget = dropTarget.parentNode;
 
-   //console.log(guestName+ " "+element.tagName+" "+target.tagName);
+   //console.log(guestName+ " "+dropTarget.tagName+" "+dropTarget.tagName);
 
    addGuestNameToList(dropTarget, guestName);
+}
+
+function ulListContainsItem(ulList, guestName)
+{
+   var liList = ulList.getElementsByTagName('li');
+   for (var i = 0; i < liList.length; i++)
+   {
+      var name = liList[i].id;
+      if (name === guestName)
+      {
+          return liList[i];
+      }
+   }
+	return null;
 }
 
 function addGuestNameToList(ulList, guestName)
 {
    var element = document.getElementById(guestName);
-
-   var hasElement = false;
-   var liList = ulList.getElementsByTagName('li');
-   for (var i = 0; i < liList.length && !hasElement; i++)
-   {
-      var name = liList[i].id;
-      if (name === guestName)
-      {
-          hasElement = true;
-          console.log("Duplicate, ignoring "+name);
-      }
-   }
-
+   var hasElement = ulListContainsItem(ulList, guestName);
    if (!hasElement)
    {
       var newElement = element.cloneNode(true);
+      var btn = document.createElement("BUTTON");        // Create a <button> element
+      var t = document.createTextNode("X");       // Create a text node
+	   btn.className = "smallButton";
+	   btn.style = "float: right;";
+      btn.onclick = function() {
+         console.log("REMOVE "+newElement.id);
+         ulList.removeChild(newElement);
+	   }
+      btn.appendChild(t); 
+      newElement.appendChild(btn);
       ulList.appendChild(newElement);
    }
 }
