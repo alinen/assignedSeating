@@ -25,6 +25,8 @@
    border-radius: 10px;
    background-color: rgb(100,200,200);
    margin: 0.1em;
+   overflow-y: scroll;
+   height: 600px;
 }
 
 .listInput
