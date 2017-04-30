@@ -48,6 +48,15 @@ ________________________________
 constrained_clustering takes, an affinity matrix and an array of table sizes, and a boolean to return violated constraints and returns an array of tuples (table #, person id) and possibly a dictionary of violated constrains key: type, value: (person id 1, person id 2).
 
 ```python
+import numpy as np
+from SSC.constrained_SSC import *
+graph_affinity = np.loadtxt(open('SSC/example_affinity_2.csv'), delimiter=',')
+constrained_SSC(graph_affinity, [10,10,10])
+```
+
+TBD ---
+
+```
 import SSC
 
 (tables, violated_constraints) = SSC.constrained_clustering(graph_affinity, table_array, show_violated_constraints)
