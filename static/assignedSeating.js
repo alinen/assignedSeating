@@ -175,7 +175,8 @@ function removeKeepSeparate(event)
 
 function readGuestListCSV(f)
 {
-   if (f.type.match('text/csv')) 
+    //ASN TODO: The following is not cross platform
+   //if (f.type.match('text/csv')) 
    {
       guestList = [];
 		nameToId = {};
@@ -220,10 +221,10 @@ function readGuestListCSV(f)
       // Read in the image file as a data URL.
       reader.readAsText(f);
    }
-   else
-   {
-      alert("Only CSV files are supported.");
-   }
+   //else
+   //{
+      //alert("Only CSV files are supported.");
+   //}
 }
 
 function handleBrowseGuestList(evt) 
