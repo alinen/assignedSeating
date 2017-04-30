@@ -115,8 +115,16 @@ function getConstraint(id1, id2)
 
 function setConstraint(id1, id2, value)
 {
+	// all constraints are symmetric
 	constraints[id1].push({id: id2, valence: value});
 	constraints[id2].push({id: id1, valence: value});
+
+	// TODO: friendly constraints are transitive, e.g.
+	// if a likes b and b likes c, then a likes c
+
+
+	// TODO: unfriendly constraints 
+	// if a likes b, and b hates c, them a hates c
 }
 
 function saveListConstraints(guestName, elementName, value)
@@ -154,10 +162,6 @@ function saveDisplayedConstraints(guestName)
 	saveListConstraints(guestName, "betterKeptSeparateList", -1);
 	saveListConstraints(guestName, "keepSeparateList", -2);
 
-	clearListConstraints("keepTogetherList");
-	clearListConstraints("betterKeptTogetherList");
-	clearListConstraints("betterKeptSeparateList");
-	clearListConstraints("keepSeparateList");
 }
 
 function displayConstraints(guestName)
@@ -182,12 +186,21 @@ function displayConstraints(guestName)
 	}
 }
 
+function clearDisplayedConstraints()
+{
+	clearListConstraints("keepTogetherList");
+	clearListConstraints("betterKeptTogetherList");
+	clearListConstraints("betterKeptSeparateList");
+	clearListConstraints("keepSeparateList");
+}
+
 function selectGuest(ev)
 {
 	if (ev.target.id !== selectedGuest)
 	{
 		//console.log("YOU CLICKED "+ev.target.id);
 		saveDisplayedConstraints(selectedGuest); 
+		clearDisplayedConstraints();
 		selectedGuest = ev.target.id;
 		displayConstraints(selectedGuest);
 	}
@@ -297,33 +310,29 @@ function readGuestListCSV(f)
                if (name === "") continue;
 
                var tokens = name.split(",");
-               if (tokens[0] === "+2")
+               if (tokens[0] === "2")
 					{
                    var id1 = nameToId[tokens[1]];
                    var id2 = nameToId[tokens[2]];
 						 constraints[id1].push({id: id2, valence: 2});
-						 constraints[id2].push({id: id1, valence: 2});
 					}
-               else if (tokens[0] === "+1")
+               else if (tokens[0] === "1")
 					{
                    var id1 = nameToId[tokens[1]];
                    var id2 = nameToId[tokens[2]];
 						 constraints[id1].push({id: id2, valence: 1});
-						 constraints[id2].push({id: id1, valence: 1});
 					}
                else if (tokens[0] === "-1")
 					{
                    var id1 = nameToId[tokens[1]];
                    var id2 = nameToId[tokens[2]];
 						 constraints[id1].push({id: id2, valence: -1});
-						 constraints[id2].push({id: id1, valence: -1});
 					}
                else if (tokens[0] === "-2")
 					{
                    var id1 = nameToId[tokens[1]];
                    var id2 = nameToId[tokens[2]];
 						 constraints[id1].push({id: id2, valence: -2});
-						 constraints[id2].push({id: id1, valence: -2});
 					}
                else 
                {
@@ -409,6 +418,8 @@ function onSaveConstraints()
 {
    if (guestList.length < 2) return;
 
+	saveDisplayedConstraints(selectedGuest); 
+
    // Output guest list and constraints
    // They both can be reloaded together on next Browse load
 
@@ -418,17 +429,18 @@ function onSaveConstraints()
 		contents += guestList[i]+"\n";
 	}
 
-/* ASN TODO
 	for (var i = 0; i < guestList.length; i++)
 	{
-		for (var j = 0; j < 
+		var name1 = guestList[i];
+		var id1 = nameToId[name1];
+		for (var j = 0; j < constraints[id1].length; j++)
+		{
+			var id2 = constraints[id1][j].id;	
+			var name2 = guestList[id2];
+			var valence = constraints[id1][j].valence;
+			contents += valence.toString() + "," + name1 + "," + name2 + "\n";
+		}
 	}
-
-   var keepTogetherRow = document.getElementById("keepTogetherRow");
-   contents += getConstraintString(keepTogetherRow, "+1");
-
-   var keepSeparateRow = document.getElementById("keepSeparateRow");
-   contents += getConstraintString(keepSeparateRow, "-1");
 
    var blob = new Blob([contents], {type: "text/csv;charset=utf-8"});
    var a = document.createElement("a");
@@ -441,7 +453,6 @@ function onSaveConstraints()
        document.body.removeChild(a);
        window.URL.revokeObjectURL(url);
    }, 0);
-*/
 }
 
 function addKeepSeparatedConstraint(constraintStr)
