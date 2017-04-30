@@ -59,15 +59,19 @@ Here's an example of how to run the Buffy wedding assignment.
 ```python
 import numpy as np
 from scipy.sparse import csr_matrix
-X = np.loadtxt('buffy-socialgraph-sparse-mat.txt')
+from SSC.constrained_SSC import *
+
+X = np.loadtxt('SSC/buffy-socialgraph-sparse-mat.txt')
 rows = X[:,0].astype(int)
 cols = X[:,1].astype(int)
 data = X[:,2]
-
 m = max(max(rows),max(cols)) + 1
 graph_affinity = csr_matrix((data, (rows, cols)), shape=(m, m))
+
 (table_assignment, _) = constrained_SSC(graph_affinity.toarray(), [20,20,20])
 ```
+
+I used python reformat_graph.py buffy-socialgraph.csv  > buffy-socialgraph-sparse-mat.txt in the SSC directory.
 
 
 TBD ---
