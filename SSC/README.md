@@ -51,7 +51,7 @@ constrained_clustering takes, an affinity matrix and an array of table sizes, an
 import numpy as np
 from SSC.constrained_SSC import *
 graph_affinity = np.loadtxt(open('SSC/example_affinity_2.csv'), delimiter=',')
-constrained_SSC(graph_affinity, [10,10,10])
+(table_assignment, _) = constrained_SSC(graph_affinity, [10,10,10])
 ```
 
 TBD ---
