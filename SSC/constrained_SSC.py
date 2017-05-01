@@ -11,22 +11,22 @@ def solve_constraints(XXc, tables):
     for i in range(len(tables)):
         if violated_constraints[i] != 0:
             too_much = violated_constraints[i]
-            print i, too_much
+            #print i, too_much
             while too_much > 0:
                 swaped = False
                 for j in xrange(i+1, len(tables)):
                     if violated_constraints[j] < 0:
-                        print "VC", j, violated_constraints[j]
+                        #print "VC", j, violated_constraints[j]
                         for r in range(num_clusters):
-                            print "swapping test", i,j,r
+                            #print "swapping test", i,j,r
                             if XXc[r,i] == 1 and XXc[r,j] == 0:
                                 XXc[r,i] = 0
                                 XXc[r,j] = 1
                                 swaped = True
-                                print "swapped", r,i,j
+                                # print "swapped", r,i,j
                                 break
                         if swaped:
-                            print "swapped", i, j
+                            #print "swapped", i, j
                             break
                 too_much = too_much - 1
                 cluster_sizes = np.sum(XXc, axis = 0)
