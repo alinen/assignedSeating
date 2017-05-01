@@ -1,0 +1,234 @@
+Buffy Summers, Xander Harris, 2
+Buffy Summers, Willow Rosenberg, 2
+Buffy Summers, Rupert Giles, 1
+Buffy Summers, Spike, -1
+Buffy Summers, Dawn Summers, 1
+Buffy Summers, Angel, -1
+Buffy Summers, Joyce Summers, 1
+Buffy Summers, Riley Finn, -1
+Buffy Summers, Jonathan Levinson, -1
+Buffy Summers, Andrew Wells, -1
+Buffy Summers, Faith Lehane, -1
+Buffy Summers, Principal Snyder, -2
+Buffy Summers, Drusilla, -2
+Buffy Summers, Warren Meers, -2
+Buffy Summers, Jenny Calendar, -1
+Buffy Summers, Mayor Richard Wilkins, -2
+Buffy Summers, Principal Robin Wood, -1
+Buffy Summers, Glory, -2
+Buffy Summers, Wesley Wyndam-Pryce, -1
+Buffy Summers, Adam The Cyborg, -2
+Buffy Summers, Professor Maggie Walsh, -2
+Buffy Summers, The Master, -2
+Buffy Summers, Amy Madison, -2
+Buffy Summers, Halfrek, -1
+Buffy Summers, Collin, -2
+Buffy Summers, Darla, -2
+Buffy Summers, Harmony, -2
+Buffy Summers, Mr. Trick, -2
+Buffy Summers, Willy the Snitch, -1
+Buffy Summers, Principal Bob Flutie, -1
+Buffy Summers, Ethan Rayne, -2
+Buffy Summers, Dracula, -1
+Buffy Summers, Lilah Morgan, -2
+Buffy Summers, Lindsey McDonald, -2
+Buffy Summers, Daniel Holtz, -2
+Buffy Summers, Eve, -2
+Buffy Summers, Holland Manners, -2
+Xander Harris, Buffy Summers, 2
+Xander Harris, Willow Rosenberg, 2
+Xander Harris, Spike, -1
+Xander Harris, Anya, 2
+Xander Harris, Dawn Summers, 1
+Xander Harris, Angel, -1
+Xander Harris, Cordelia Chase, -1
+Xander Harris, Riley Finn, -1
+Xander Harris, Faith Lehane, -1
+Xander Harris, Dracula, 1
+Willow Rosenberg, Buffy Summers, 2
+Willow Rosenberg, Xander Harris, 2
+Willow Rosenberg, Rupert Giles, 1
+Willow Rosenberg, Tara Maclay, 2
+Willow Rosenberg, Amy Madison, -2
+Willow Rosenberg, Oz, 1
+Rupert Giles, Buffy Summers, 1
+Rupert Giles, Willow Rosenberg, 1
+Rupert Giles, Faith Lehane, 1
+Rupert Giles, Jenny Calendar, 2
+Rupert Giles, Ethan Rayne, -2
+Spike, Buffy Summers, -1
+Spike, Xander Harris, -1
+Spike, Angel, -1
+Spike, Joyce Summers, 1
+Spike, Drusilla, 2
+Spike, Professor Maggie Walsh, -2
+Spike, The Master, -2
+Spike, Harmony, -2
+Anya, Xander Harris, 2
+Anya, Halfrek, 1
+Anya, D'Hoffryn, 1
+Dawn Summers, Buffy Summers, 1
+Dawn Summers, Xander Harris, 1
+Dawn Summers, Joyce Summers, 1
+Dawn Summers, Glory, -2
+Angel, Buffy Summers, -1
+Angel, Xander Harris, -1
+Angel, Spike, -1
+Angel, Cordelia Chase, 2
+Angel, Faith Lehane, 1
+Angel, Wesley Wyndam-Pryce, 1
+Angel, Connor, 2
+Angel, Detective Kate Lockley, 1
+Angel, Skip, -2
+Joyce Summers, Buffy Summers, 1
+Joyce Summers, Spike, 1
+Joyce Summers, Dawn Summers, 1
+Cordelia Chase, Xander Harris, -1
+Cordelia Chase, Angel, 2
+Cordelia Chase, Wesley Wyndam-Pryce, 1
+Cordelia Chase, Harmony, -1
+Cordelia Chase, Charles Gunn, 1
+Cordelia Chase, Lorne, 1
+Cordelia Chase, Winifred Burkle, 1
+Cordelia Chase, The Groosalugg, 2
+Tara Maclay, Willow Rosenberg, 2
+Riley Finn, Buffy Summers, -1
+Riley Finn, Xander Harris, -1
+Riley Finn, Graham Miller, 2
+Riley Finn, Adam The Cyborg, -2
+Riley Finn, Professor Maggie Walsh, -2
+Jonathan Levinson, Buffy Summers, -1
+Jonathan Levinson, Andrew Wells, 2
+Jonathan Levinson, Warren Meers, 2
+Andrew Wells, Buffy Summers, -1
+Andrew Wells, Jonathan Levinson, 2
+Faith Lehane, Buffy Summers, -1
+Faith Lehane, Xander Harris, -1
+Faith Lehane, Rupert Giles, 1
+Faith Lehane, Angel, 1
+Faith Lehane, Mayor Richard Wilkins, -2
+Faith Lehane, Principal Robin Wood, 2
+Principal Snyder, Buffy Summers, -2
+Drusilla, Buffy Summers, -2
+Drusilla, Spike, 2
+Drusilla, Slayer Kennedy, -2
+Drusilla, Darla, 1
+Warren Meers, Buffy Summers, -2
+Warren Meers, Jonathan Levinson, 2
+Warren Meers, Amy Madison, 2
+Jenny Calendar, Buffy Summers, -1
+Jenny Calendar, Rupert Giles, 2
+Mayor Richard Wilkins, Buffy Summers, -2
+Mayor Richard Wilkins, Faith Lehane, -2
+Principal Robin Wood, Buffy Summers, -1
+Principal Robin Wood, Faith Lehane, 2
+Glory, Buffy Summers, -2
+Glory, Dawn Summers, -2
+Slayer Kennedy, Drusilla, -2
+Slayer Kennedy, Slayer Amanda, 2
+Slayer Kennedy, The Master, -2
+Slayer Kennedy, Slayer Rona, 2
+Slayer Kennedy, Devon MacLeish, 2
+Slayer Kennedy, Slayer Vi, 2
+Slayer Kennedy, Darla, -2
+Slayer Kennedy, Harmony, -2
+Slayer Kennedy, Mr. Trick, -2
+Slayer Kennedy, Slayer Kendra, 2
+Slayer Kennedy, Dracula, -2
+Graham Miller, Riley Finn, 2
+Graham Miller, Adam The Cyborg, -2
+Graham Miller, Professor Maggie Walsh, -2
+Slayer Amanda, Slayer Kennedy, 2
+Wesley Wyndam-Pryce, Buffy Summers, -1
+Wesley Wyndam-Pryce, Angel, 1
+Wesley Wyndam-Pryce, Cordelia Chase, 1
+Wesley Wyndam-Pryce, Charles Gunn, 1
+Wesley Wyndam-Pryce, Winifred Burkle, 2
+Wesley Wyndam-Pryce, Connor, 1
+Wesley Wyndam-Pryce, Detective Kate Lockley, 1
+Wesley Wyndam-Pryce, Daniel Holtz, -2
+Adam The Cyborg, Buffy Summers, -2
+Adam The Cyborg, Riley Finn, -2
+Adam The Cyborg, Graham Miller, -2
+Adam The Cyborg, Professor Maggie Walsh, 2
+Professor Maggie Walsh, Buffy Summers, -2
+Professor Maggie Walsh, Spike, -2
+Professor Maggie Walsh, Riley Finn, -2
+Professor Maggie Walsh, Graham Miller, -2
+Professor Maggie Walsh, Adam The Cyborg, 2
+The Master, Buffy Summers, -2
+The Master, Spike, -2
+The Master, Slayer Kennedy, -2
+The Master, Collin, 2
+The Master, Darla, 2
+Amy Madison, Buffy Summers, -2
+Amy Madison, Willow Rosenberg, -2
+Amy Madison, Warren Meers, 2
+Slayer Rona, Slayer Kennedy, 2
+Devon MacLeish, Slayer Kennedy, 2
+Clem, Harmony, 2
+Slayer Vi, Slayer Kennedy, 2
+Halfrek, Buffy Summers, -1
+Halfrek, Anya, 1
+Halfrek, D'Hoffryn, 1
+Collin, Buffy Summers, -2
+Collin, The Master, 2
+Darla, Buffy Summers, -2
+Darla, Drusilla, 1
+Darla, Slayer Kennedy, -2
+Darla, The Master, 2
+Harmony, Buffy Summers, -2
+Harmony, Spike, -2
+Harmony, Cordelia Chase, -1
+Harmony, Slayer Kennedy, -2
+Harmony, Clem, 2
+Oz, Willow Rosenberg, 1
+Mr. Trick, Buffy Summers, -2
+Mr. Trick, Slayer Kennedy, -2
+Willy the Snitch, Buffy Summers, -1
+Willy the Snitch, Detective Kate Lockley, -1
+Principal Bob Flutie, Buffy Summers, -1
+Ethan Rayne, Buffy Summers, -2
+Ethan Rayne, Rupert Giles, -2
+D'Hoffryn, Anya, 1
+D'Hoffryn, Halfrek, 1
+Slayer Kendra, Slayer Kennedy, 2
+Dracula, Buffy Summers, -1
+Dracula, Xander Harris, 1
+Dracula, Slayer Kennedy, -2
+Charles Gunn, Cordelia Chase, 1
+Charles Gunn, Wesley Wyndam-Pryce, 1
+Charles Gunn, Connor, 1
+Charles Gunn, Detective Kate Lockley, 1
+Lorne, Cordelia Chase, 1
+Lorne, Winifred Burkle, 2
+Winifred Burkle, Cordelia Chase, 1
+Winifred Burkle, Wesley Wyndam-Pryce, 2
+Winifred Burkle, Lorne, 2
+Winifred Burkle, Connor, 1
+Winifred Burkle, Detective Kate Lockley, 1
+Lilah Morgan, Buffy Summers, -2
+Lilah Morgan, Lindsey McDonald, 2
+Lilah Morgan, Holland Manners, 2
+Connor, Angel, 2
+Connor, Wesley Wyndam-Pryce, 1
+Connor, Charles Gunn, 1
+Connor, Winifred Burkle, 1
+Lindsey McDonald, Buffy Summers, -2
+Lindsey McDonald, Lilah Morgan, 2
+Lindsey McDonald, Eve, 2
+Lindsey McDonald, Holland Manners, 2
+Detective Kate Lockley, Angel, 1
+Detective Kate Lockley, Wesley Wyndam-Pryce, 1
+Detective Kate Lockley, Willy the Snitch, -1
+Detective Kate Lockley, Charles Gunn, 1
+Detective Kate Lockley, Winifred Burkle, 1
+Daniel Holtz, Buffy Summers, -2
+Daniel Holtz, Wesley Wyndam-Pryce, -2
+Eve, Buffy Summers, -2
+Eve, Lindsey McDonald, 2
+The Groosalugg, Cordelia Chase, 2
+Holland Manners, Buffy Summers, -2
+Holland Manners, Lilah Morgan, 2
+Holland Manners, Lindsey McDonald, 2
+Skip, Angel, -2

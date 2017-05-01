@@ -1,0 +1,58 @@
+'Principal Snyder',0
+'Drusilla',0
+'Mayor Richard Wilkins',0
+'Mr. Trick',0
+'Ethan Rayne',0
+'Lilah Morgan',0
+'Lindsey McDonald',0
+'Daniel Holtz',0
+'Eve',0
+'Holland Manners',0
+'Wesley Wyndam-Pryce',1
+'Detective Kate Lockley',1
+'Skip',1
+'Lorne',1
+'Winifred Burkle',1
+'Angel',2
+'Cordelia Chase',2
+'Connor',2
+'Charles Gunn',2
+'The Groosalugg',2
+'Glory',3
+'Adam The Cyborg',3
+'Professor Maggie Walsh',3
+'The Master',3
+'Collin',3
+'Darla',3
+'Harmony',3
+'Clem',3
+'Willy the Snitch',3
+'Faith Lehane',4
+'Principal Robin Wood',4
+'Principal Bob Flutie',4
+'Dracula',4
+'Slayer Kennedy',5
+'Slayer Amanda',5
+'Slayer Rona',5
+'Devon MacLeish',5
+'Slayer Vi',5
+'Slayer Kendra',5
+'Rupert Giles',6
+'Jenny Calendar',6
+'Spike',7
+'Riley Finn',7
+'Graham Miller',7
+'Jonathan Levinson',8
+'Andrew Wells',8
+'Warren Meers',8
+'Amy Madison',8
+'Buffy Summers',9
+'Xander Harris',9
+'Willow Rosenberg',9
+'Dawn Summers',9
+'Joyce Summers',9
+'Halfrek',9
+'Anya',9
+'Tara Maclay',9
+'Oz',9
+'D'Hoffryn',9

@@ -1,6 +1,6 @@
 import sys
 
-next_idnum = 1
+next_idnum = 0
 name2id = {}
 names = []
 for line in open(sys.argv[1]).readlines():
@@ -26,5 +26,6 @@ for line in open(sys.argv[1]).readlines():
     if affinity != 0:
         print name2id[person1], name2id[person2], affinity
 
+output = open('names.txt', 'w')
 for name in names:
-    print >> sys.stderr, name +  "," +  str(name2id[name])
+    output.writelines("%s,%d\n"%(name,name2id[name]))
