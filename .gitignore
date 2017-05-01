@@ -2,3 +2,4 @@ nodebox
 *~
 *.swp
 *.swo
+*.pyc

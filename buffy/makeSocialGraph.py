@@ -24,5 +24,6 @@ for name1 in names:
     for name2 in names:
         if name1 == name2: continue
         v = checkConstraint(name1, name2, constraints)
-        print "%s, %s, %s"%(name1, name2, v)
+        if v!="0":
+           print "%s, %s, %s"%(name1, name2, v)
         

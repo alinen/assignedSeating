@@ -1,0 +1,58 @@
+Buffy Summers,0
+Xander Harris,1
+Willow Rosenberg,2
+Rupert Giles,3
+Spike,4
+Dawn Summers,5
+Angel,6
+Joyce Summers,7
+Riley Finn,8
+Jonathan Levinson,9
+Andrew Wells,10
+Faith Lehane,11
+Principal Snyder,12
+Drusilla,13
+Warren Meers,14
+Jenny Calendar,15
+Mayor Richard Wilkins,16
+Principal Robin Wood,17
+Glory,18
+Wesley Wyndam-Pryce,19
+Adam The Cyborg,20
+Professor Maggie Walsh,21
+The Master,22
+Amy Madison,23
+Halfrek,24
+Collin,25
+Darla,26
+Harmony,27
+Mr. Trick,28
+Willy the Snitch,29
+Principal Bob Flutie,30
+Ethan Rayne,31
+Dracula,32
+Lilah Morgan,33
+Lindsey McDonald,34
+Daniel Holtz,35
+Eve,36
+Holland Manners,37
+Anya,38
+Cordelia Chase,39
+Tara Maclay,40
+Oz,41
+D'Hoffryn,42
+Connor,43
+Detective Kate Lockley,44
+Skip,45
+Charles Gunn,46
+Lorne,47
+Winifred Burkle,48
+The Groosalugg,49
+Graham Miller,50
+Slayer Kennedy,51
+Slayer Amanda,52
+Slayer Rona,53
+Devon MacLeish,54
+Slayer Vi,55
+Slayer Kendra,56
+Clem,57

@@ -48,6 +48,35 @@ ________________________________
 constrained_clustering takes, an affinity matrix and an array of table sizes, and a boolean to return violated constraints and returns an array of tuples (table #, person id) and possibly a dictionary of violated constrains key: type, value: (person id 1, person id 2).
 
 ```python
+import numpy as np
+from SSC.constrained_SSC import *
+graph_affinity = np.loadtxt(open('SSC/example_affinity_2.csv'), delimiter=',')
+(table_assignment, _) = constrained_SSC(graph_affinity, [10,10,10])
+```
+
+Here's an example of how to run the Buffy wedding assignment.
+
+```python
+import numpy as np
+from scipy.sparse import csr_matrix
+from SSC.constrained_SSC import *
+
+X = np.loadtxt('SSC/buffy-socialgraph-sparse-mat.txt')
+rows = X[:,0].astype(int)
+cols = X[:,1].astype(int)
+data = X[:,2]
+m = max(max(rows),max(cols)) + 1
+graph_affinity = csr_matrix((data, (rows, cols)), shape=(m, m))
+
+(table_assignment, _) = constrained_SSC(graph_affinity.toarray(), [20,20,20])
+```
+
+I used python reformat_graph.py buffy-socialgraph.csv  > buffy-socialgraph-sparse-mat.txt in the SSC directory.
+
+
+TBD ---
+
+```
 import SSC
 
 (tables, violated_constraints) = SSC.constrained_clustering(graph_affinity, table_array, show_violated_constraints)
